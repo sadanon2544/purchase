@@ -11,7 +11,7 @@ stripe.api_key = "sk_live_51NTdHJFm689lJVNLXowcgkh4Mr9Vhh3G10K99Apbla7vUCBSfFwT3
 
 origins = [
     "http://localhost/",
-    "http://localhost:4200",
+    "http://localhost:4200/",
 ]
 
 
