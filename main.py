@@ -1,7 +1,7 @@
 import stripe
 from fastapi import FastAPI, Request
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.middleware import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 app = FastAPI()
