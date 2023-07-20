@@ -9,6 +9,11 @@ app.add_middleware(SessionMiddleware,
 
 stripe.api_key = "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"
 
+origins = [
+    "http://localhost/",
+    "http://localhost:4200",
+]
+
 
 @app.post("/create-checkout-session")
 async def create_checkout_session(request: Request):
