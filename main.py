@@ -4,16 +4,25 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi.responses import RedirectResponse
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware,
-                   secret_key="dVu9jfC1PPVGRkq-X5nKaP_vDHC63CxQ2K4W0QVpFJo")
-
-stripe.api_key = "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"
 
 origins = [
     "http://localhost",
     "http://localhost:4200",
     "http://localhost:4200/usagepackage"
 ]
+
+app.add_middleware(SessionMiddleware,
+                   secret_key="dVu9jfC1PPVGRkq-X5nKaP_vDHC63CxQ2K4W0QVpFJo",
+                   CORSMiddleware,
+                    allow_origins=origins,
+                    allow_credentials=True,
+                    allow_methods=["*"],
+                    allow_headers=["*"],
+                  )
+
+stripe.api_key = "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"
+
+
 
 
 @app.post("/create-checkout-session")
