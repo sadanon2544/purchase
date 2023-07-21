@@ -40,8 +40,8 @@ async def create_checkout_session(request: Request):
             "quantity": 1
         }],
         client_reference_id=user_id,
-        success_url='http://127.0.0.1:8000/success',
-        cancel_url='http://127.0.0.1:8000/cancel',
+        success_url='http://localhost:4200/success',
+        cancel_url='http://localhost:4200/cancle',
     )
     # return RedirectResponse(checkout_session["url"])
     return {"sessionId": checkout_session["id"], 'message': checkout_session["url"]}
