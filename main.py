@@ -24,7 +24,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-stripe.api_key = "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"
+# stripe.api_key = "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"
+stripe.api_key ="sk_test_51NTdHJFm689lJVNLfCNn9s5TCRAuh7lCal7OX29k9VIgp5x3PZZhiSFHJXNImQWlNjxyLxl3yjG9h5LWQivNICA50008b276C9"
 
 @app.post("/create-checkout-session")
 async def create_checkout_session(request: Request):
@@ -34,7 +35,8 @@ async def create_checkout_session(request: Request):
 
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=["card"],
-        mode="subscription",
+        # mode="subscription",
+        mode='payment',
         line_items=[{
             "price": data["priceId"],
             "quantity": 1
