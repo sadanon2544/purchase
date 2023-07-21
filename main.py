@@ -34,9 +34,9 @@ async def create_checkout_session(request: Request):
     data = await request.json()
 
     google_id = request.session.get("google_id")
-    # if google_id is None:
-    #     # สร้างการตอบกลับว่าไม่ได้เข้าสู่ระบบหรือข้อผิดพลาดอื่น ๆ
-    #     return {"error": "User is not logged in"}
+    if google_id is None:
+        # สร้างการตอบกลับว่าไม่ได้เข้าสู่ระบบหรือข้อผิดพลาดอื่น ๆ
+        return {"error": "User is not logged in"}
 
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=["card"],
@@ -48,6 +48,7 @@ async def create_checkout_session(request: Request):
         client_reference_id=google_id,
         success_url='http://127.0.0.1:8000/success',
         cancel_url='http://127.0.0.1:8000/cancel',
+        print(client_reference_id)
     )
     # return RedirectResponse(checkout_session["url"])
     return {"sessionId": checkout_session["id"], 'message': checkout_session["url"]}
