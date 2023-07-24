@@ -1,5 +1,5 @@
 import stripe
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Header
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -48,6 +48,34 @@ async def create_checkout_session(request: Request):
     )
     # return RedirectResponse(checkout_session["url"])
     return {"sessionId": checkout_session["id"], 'message': checkout_session["url"]}
+
+@app.post("/webhook")
+async def webhook_received(request: Request, stripe_signature: str = Header(None)):
+    webhook_secret = "we_1NXLpTFm689lJVNLZQ0UcYHG"
+    data = await request.body()
+    try:
+        event = stripe.Webhook.construct_event(
+            payload=data,
+            sig_header=stripe_signature,
+            secret=webhook_secret
+        )
+        event_data = event['data']
+    except Exception as e:
+        return {"error": str(e)}
+    
+    print(event_data)
+
+    event_type = event['type']
+    if event_type == 'checkout.session.completed':
+        print('checkout session completed')
+    elif event_type == 'invoice.paid':
+        print('invoice paid')
+    elif event_type == 'invoice.payment_failed':
+        print('invoice payment failed')
+    else:
+        print(f'unhandled event: {event_type}')
+    
+    return {"status": "success"}
 
 # @payment_app.post("/create_stripe_test", tags=["payments_service"])
 # #def check_qrcode(user_id: str = Depends(oauth2_utils.require_user)):
