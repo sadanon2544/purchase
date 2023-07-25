@@ -50,10 +50,11 @@ async def create_checkout_session(request: Request):
     return {"sessionId": checkout_session["id"], 'message': checkout_session["url"]}
 
 @app.post("/webhook")
-async def webhook_received(request: Request, stripe_signature: str = Header(str)):
+async def webhook_received(request: Request, stripe_signature: str = Header(None)):
     webhook_secret = "we_1NXfnWFm689lJVNLqsUTbAQn"
     data = await request.body()
     try:
+        stripe_signature = stripe_signature.strip()
         event = stripe.Webhook.construct_event(
             payload=data,
             sig_header=stripe_signature,
