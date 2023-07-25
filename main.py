@@ -51,7 +51,7 @@ async def create_checkout_session(request: Request):
 
 @app.post("/webhook")
 async def webhook_received(request: Request, stripe_signature: str = Header(None)):
-    webhook_secret = "we_1NXLpTFm689lJVNLZQ0UcYHG"
+    webhook_secret = "we_1NXfnWFm689lJVNLqsUTbAQn"
     data = await request.body()
     try:
         event = stripe.Webhook.construct_event(
