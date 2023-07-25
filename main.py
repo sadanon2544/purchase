@@ -43,7 +43,7 @@ async def create_checkout_session(request: Request):
             "quantity": 1
         }],
         client_reference_id=user_id,
-        success_url='http://localhost:4200/success',
+        success_url='https://purchase-3m6k.onrender.com',
         cancel_url='http://localhost:4200/cancle',
     )
     # return RedirectResponse(checkout_session["url"])
