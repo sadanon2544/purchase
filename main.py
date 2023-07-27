@@ -32,7 +32,7 @@ stripe.api_key ="sk_test_51NTdHJFm689lJVNLfCNn9s5TCRAuh7lCal7OX29k9VIgp5x3PZZhiS
 async def create_checkout_session(request: Request):
     data = await request.json()
 
-    user_id = data["google_id"]
+    user_id = data["user_id"]
 
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=["card"],
